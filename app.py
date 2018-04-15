@@ -14,6 +14,10 @@ class ReviewQueue(NamedTuple):
     def get_stats_url(slug):
         return f'https://stackoverflow.com/review/{slug}/stats'
 
+    @staticmethod
+    def get_review_url(slug):
+        return f'https://stackoverflow.com/review/{slug}'
+
 
 def get_queues():
     """
@@ -89,7 +93,8 @@ def main():
     print()
     print('-- Current queue status --')
     for queue, count in get_review_queues_current_status().items():
-        print(f'{count}\t{queue.name}')
+        url = ReviewQueue.get_review_url(queue.slug)
+        print(f'{count}\t{queue.name} ({url})')
 
 
 if __name__ == '__main__':
