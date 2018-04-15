@@ -2,7 +2,6 @@
 Keep track of the number of reviews I've done on Stack Overflow.
 """
 
-from .models import ReviewQueue
 from .stats import get_reviews_all_time
 from .status import get_review_queues_current_status
 
