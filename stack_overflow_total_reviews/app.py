@@ -2,11 +2,14 @@
 Keep track of the number of reviews I've done on Stack Overflow.
 """
 
+from .models import User
 from .stats import get_reviews_all_time
 from .status import get_review_queues_current_status
 
 
 def main():
+    user = User(149428, 2031)
+
     reviews, last_updated = get_reviews_all_time()
 
     total_reviews = sum(reviews.values())
@@ -21,7 +24,7 @@ def main():
 
     print()
     print('-- Current queue status --')
-    for queue, count in get_review_queues_current_status().items():
+    for queue, count in get_review_queues_current_status(user).items():
         url = queue.get_review_url()
         print(f'{count}\t{queue.name} ({url})')
 

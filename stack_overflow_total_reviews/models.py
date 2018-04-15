@@ -1,6 +1,11 @@
 from typing import NamedTuple
 
 
+class User(NamedTuple):
+    id: int
+    reputation: int
+
+
 class ReviewQueue(NamedTuple):
     name: str
     slug: str

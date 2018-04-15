@@ -10,13 +10,18 @@ def fetch_counts():
     return counts
 
 
-def get_review_queues_current_status():
+def get_review_queues_current_status(user=None):
     """
     Which queues have questions/answers/posts/edits available for review?
 
     https://stackoverflow.com/review
     """
+
+    # only include queues accessible at this user's reputation level
     queues = get_queues()
+    if user is not None:
+        queues = (x for x in queues if x.reputation <= user.reputation)
+
     counts = fetch_counts()
     queue_counts = OrderedDict([
         (queue, counts.get(queue.slug, 0)) for queue in queues])
