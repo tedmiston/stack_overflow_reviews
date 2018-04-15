@@ -18,13 +18,13 @@ def get_queues():
     """
     return (
         'close',
+        'first-posts',
+        'helper',
+        'late-answers',
+        'low-quality-posts',
         'reopen',
         'suggested-edits',
         'triage',
-        'helper',
-        'low-quality-posts',
-        'late-answers',
-        'first-posts',
     )
 
 
