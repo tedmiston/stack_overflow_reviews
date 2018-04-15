@@ -5,13 +5,11 @@ class ReviewQueue(NamedTuple):
     name: str
     slug: str
 
-    @staticmethod
-    def get_stats_url(slug):
-        return f'https://stackoverflow.com/review/{slug}/stats'
+    def get_stats_url(self):
+        return f'https://stackoverflow.com/review/{self.slug}/stats'
 
-    @staticmethod
-    def get_review_url(slug):
-        return f'https://stackoverflow.com/review/{slug}'
+    def get_review_url(self):
+        return f'https://stackoverflow.com/review/{self.slug}'
 
 
 def get_queues():

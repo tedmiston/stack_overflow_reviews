@@ -17,13 +17,13 @@ def main():
 
     for queue, count in sorted(reviews.items(),
                                key=lambda x: x[1], reverse=True):
-        url = ReviewQueue.get_stats_url(queue.slug)
+        url = queue.get_stats_url()
         print(f'{count}\t{queue.name} ({url})')
 
     print()
     print('-- Current queue status --')
     for queue, count in get_review_queues_current_status().items():
-        url = ReviewQueue.get_review_url(queue.slug)
+        url = queue.get_review_url()
         print(f'{count}\t{queue.name} ({url})')
 
 
