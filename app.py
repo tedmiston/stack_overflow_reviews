@@ -51,6 +51,28 @@ def get_reviews_all_time():
     return review_counts_all_queues, last_updated
 
 
+def get_review_queues_current_status():
+    """
+    Which queues have questions/answers/posts/edits available for review?
+
+    https://stackoverflow.com/review
+    """
+    queues = get_queues()
+    counts = {
+        'close': 9000,
+        'reopen': 142,
+        'suggested-edits': 98,
+        'triage': 68,
+        'helper': 40,
+        'low-quality-posts': 37,
+        'late-answers': 7,
+        'first-posts': 30,
+    }
+    queue_counts = OrderedDict([
+        (queue, counts.get(queue.slug, 0)) for queue in queues])
+    return queue_counts
+
+
 def main():
     reviews, last_updated = get_reviews_all_time()
 
@@ -63,6 +85,11 @@ def main():
                                key=lambda x: x[1], reverse=True):
         url = ReviewQueue.get_stats_url(queue.slug)
         print(f'{count}\t{queue.name} ({url})')
+
+    print()
+    print('-- Current queue status --')
+    for queue, count in get_review_queues_current_status().items():
+        print(f'{count}\t{queue.name}')
 
 
 if __name__ == '__main__':
