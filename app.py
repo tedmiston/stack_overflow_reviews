@@ -46,7 +46,7 @@ def get_reviews_all_time():
         'first-posts': 21,
     }
     review_counts_all_queues = OrderedDict([
-        (queue, review_counts.get(queue, 0)) for queue in queues])
+        (queue, review_counts.get(queue.slug, 0)) for queue in queues])
     last_updated = '2018-04-14'
     return review_counts_all_queues, last_updated
 
