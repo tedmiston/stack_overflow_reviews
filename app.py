@@ -17,14 +17,14 @@ def get_queues():
     access to every queue.
     """
     return (
+        'close',
+        'reopen',
         'suggested-edits',
         'triage',
         'helper',
         'low-quality-posts',
         'late-answers',
         'first-posts',
-        'close',
-        'reopen',
     )
 
 
