@@ -3,6 +3,12 @@ Keep track of the number of reviews I've done on Stack Overflow.
 """
 
 from collections import OrderedDict
+from typing import NamedTuple
+
+
+class ReviewQueue(NamedTuple):
+    name: str
+    slug: str
 
 
 def get_review_queue_stats_url(queue_name):
@@ -17,14 +23,14 @@ def get_queues():
     access to every queue.
     """
     return (
-        'close',
-        'first-posts',
-        'helper',
-        'late-answers',
-        'low-quality-posts',
-        'reopen',
-        'suggested-edits',
-        'triage',
+        ReviewQueue('Close Votes', 'close'),
+        ReviewQueue('First Posts', 'first-posts'),
+        ReviewQueue('Help and Improvement', 'helper'),
+        ReviewQueue('Late Answers', 'late-answers'),
+        ReviewQueue('Low Quality Posts', 'low-quality-posts'),
+        ReviewQueue('Reopen Votes', 'reopen'),
+        ReviewQueue('Suggested Edits', 'suggested-edits'),
+        ReviewQueue('Triage', 'triage'),
     )
 
 
@@ -55,7 +61,7 @@ def main():
 
     for queue, count in sorted(reviews.items(),
                                key=lambda x: x[1], reverse=True):
-        print(f'{count}\t{queue}')
+        print(f'{count}\t{queue.name}')
 
 
 if __name__ == '__main__':
