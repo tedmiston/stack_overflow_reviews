@@ -22,7 +22,7 @@ def get_review_queues_current_status(user=None):
     if user is not None:
         queues = (x for x in queues if x.reputation <= user.reputation)
 
-    counts = cache.get_or_update('status', fetch_counts)
+    counts = cache.get_or_update('status', fetch_counts, ttl=60)
     counts = json.loads(counts)
 
     queue_counts = OrderedDict([
