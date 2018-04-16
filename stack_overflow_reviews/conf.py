@@ -12,3 +12,7 @@ CACHE_TTL_DEFAULT = cfg.getint('cache', 'ttl_default')
 CACHE_TTL_REVIEWS = cfg.getint('cache', 'ttl_reviews')
 CACHE_TTL_QUEUE_STATUS = cfg.getint('cache', 'ttl_queue_status')
 CACHE_TTL_REPUTATION = cfg.getint('cache', 'ttl_reputation')
+
+REDIS_HOST = cfg['redis']['host']
+REDIS_PORT = cfg.getint('redis', 'port')
+REDIS_DB = cfg.getint('redis', 'db')

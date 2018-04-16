@@ -11,7 +11,9 @@ logging.basicConfig(level=conf.LOG_LEVEL)
 class Cache:
 
     def __init__(self):
-        self._redis = redis.StrictRedis(host='localhost', port=6379, db=0,
+        self._redis = redis.StrictRedis(host=conf.REDIS_HOST,
+                                        port=conf.REDIS_PORT,
+                                        db=conf.REDIS_DB,
                                         decode_responses=True)
 
     def set_from_func(self, key, val_func, ttl=conf.CACHE_TTL_DEFAULT):
