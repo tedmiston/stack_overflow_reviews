@@ -1,13 +1,13 @@
 import json
 from collections import OrderedDict
 
+from .cache import cache
 from .models import get_queues
 
 
 def fetch_counts():
     counts_json = '{"close": 9000, "reopen": 142, "suggested-edits": 98, "triage": 68, "helper": 40, "low-quality-posts": 37, "late-answers": 7, "first-posts": 30}'  # noqa
-    counts = json.loads(counts_json)
-    return counts
+    return counts_json
 
 
 def get_review_queues_current_status(user=None):
@@ -22,7 +22,9 @@ def get_review_queues_current_status(user=None):
     if user is not None:
         queues = (x for x in queues if x.reputation <= user.reputation)
 
-    counts = fetch_counts()
+    counts = cache.get_or_update('status', fetch_counts)
+    counts = json.loads(counts)
+
     queue_counts = OrderedDict([
         (queue, counts.get(queue.slug, 0)) for queue in queues])
     return queue_counts
