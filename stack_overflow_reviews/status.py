@@ -1,13 +1,41 @@
 import json
 from collections import OrderedDict
 
+from requests_html import HTMLSession
+
 from . import conf
 from .cache import cache
 from .models import get_queues
 
 
 def fetch_counts():
-    counts_json = '{"close": 9000, "reopen": 142, "suggested-edits": 98, "triage": 68, "helper": 40, "low-quality-posts": 37, "late-answers": 7, "first-posts": 30}'  # noqa
+    session = HTMLSession()
+    r = session.get('https://stackoverflow.com/review')
+
+    counts = {}
+    for queue_row in r.html.find('.dashboard-item'):
+        queue_title = queue_row.find('.dashboard-title', first=True).text
+        if queue_title == 'Meta Reviews':
+            continue
+
+        queue_more = queue_row.find('.dashboard-activity-more', first=True)
+        recent_reviews_url = queue_more.attrs['href']
+        queue_slug = (recent_reviews_url
+                      .replace('/review/', '')
+                      .replace('/stats', ''))
+
+        dashboard_num = queue_row.find('.dashboard-num', first=True)
+        num_exact = dashboard_num.attrs['title']
+        num_exact = int(num_exact.replace(',', ''))
+        # num_short = dashboard_num.text
+        # units = queue_row.find('.dashboard-unit', first=True).text
+
+        # print(queue_title, queue_slug, num_short, num_exact, units)
+
+        counts[queue_slug] = num_exact
+
+    counts_json = json.dumps(counts)
+
     return counts_json
 
 
