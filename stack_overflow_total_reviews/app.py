@@ -25,6 +25,8 @@ def main():
     print()
     print('-- Current queue status --')
     for queue, count in get_review_queues_current_status(user).items():
+    for queue, count in sorted(get_review_queues_current_status(user).items(),
+                               key=lambda x: x[1], reverse=True):
         url = queue.get_review_url()
         print(f'{count}\t{queue.name} ({url})')
 
