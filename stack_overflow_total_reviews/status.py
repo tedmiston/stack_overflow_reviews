@@ -18,9 +18,10 @@ def get_review_queues_current_status(user=None):
     """
 
     # only include queues accessible at this user's reputation level
+    user_reputation = user.reputation
     queues = get_queues()
     if user is not None:
-        queues = (x for x in queues if x.reputation <= user.reputation)
+        queues = (x for x in queues if x.reputation <= user_reputation)
 
     counts = cache.get_or_update('status', fetch_counts, ttl=60)
     counts = json.loads(counts)

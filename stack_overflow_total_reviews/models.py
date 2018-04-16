@@ -1,9 +1,18 @@
 from typing import NamedTuple
 
+from .cache import cache
+
+
+def fetch_reputation():
+    return 2031
+
 
 class User(NamedTuple):
     id: int
-    reputation: int
+
+    @property
+    def reputation(self):
+        return int(cache.get_or_update('reputation', fetch_reputation, ttl=300))
 
 
 class ReviewQueue(NamedTuple):

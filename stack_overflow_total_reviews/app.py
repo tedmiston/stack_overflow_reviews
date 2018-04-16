@@ -8,7 +8,7 @@ from .status import get_review_queues_current_status
 
 
 def main():
-    user = User(149428, 2031)
+    user = User(149428)
 
     reviews, last_updated = get_reviews_all_time()
 
