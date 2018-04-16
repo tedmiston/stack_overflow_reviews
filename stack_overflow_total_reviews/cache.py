@@ -2,10 +2,10 @@ import logging
 
 import redis
 
-log = logging.getLogger(__name__)
-logging.basicConfig(level=logging.DEBUG)
+from . import conf
 
-DEFAULT_TTL = 86400
+log = logging.getLogger(__name__)
+logging.basicConfig(level=conf.LOG_LEVEL)
 
 
 class Cache:
@@ -14,14 +14,14 @@ class Cache:
         self._redis = redis.StrictRedis(host='localhost', port=6379, db=0,
                                         decode_responses=True)
 
-    def set_from_func(self, key, val_func, ttl=DEFAULT_TTL):
+    def set_from_func(self, key, val_func, ttl=conf.CACHE_TTL_DEFAULT):
         val = val_func()
         self._redis.set(key, val, ex=ttl)
 
     def get(self, key):
         return self._redis.get(key)
 
-    def get_or_update(self, key, fetch_val, ttl=DEFAULT_TTL):
+    def get_or_update(self, key, fetch_val, ttl=conf.CACHE_TTL_DEFAULT):
         val = self.get(key)
         if val is not None:
             expires_in = self._redis.ttl(key)

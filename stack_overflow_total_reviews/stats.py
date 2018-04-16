@@ -2,6 +2,7 @@ import json
 from collections import OrderedDict
 from datetime import datetime
 
+from . import conf
 from .cache import cache
 from .models import get_queues
 
@@ -14,7 +15,8 @@ def fetch_reviews():
 
 def get_reviews_all_time():
     """Reviews given for queues I can access."""
-    reviews = cache.get_or_update('reviews', fetch_reviews, ttl=300)
+    reviews = cache.get_or_update('reviews', fetch_reviews,
+                                  ttl=conf.CACHE_TTL_REVIEWS)
     reviews = json.loads(reviews)
 
     reviews_updated = cache.get('reviews_updated')

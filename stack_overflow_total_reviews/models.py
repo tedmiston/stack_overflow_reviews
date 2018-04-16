@@ -1,5 +1,6 @@
 from typing import NamedTuple
 
+from . import conf
 from .cache import cache
 
 
@@ -12,7 +13,8 @@ class User(NamedTuple):
 
     @property
     def reputation(self):
-        return int(cache.get_or_update('reputation', fetch_reputation, ttl=300))
+        return int(cache.get_or_update('reputation', fetch_reputation,
+                                       ttl=conf.CACHE_TTL_REPUTATION))
 
 
 class ReviewQueue(NamedTuple):
