@@ -11,11 +11,15 @@ class ReviewQueue(NamedTuple):
     slug: str
     reputation: int  # threshold for accessing this queue
 
+    def _get_url(self, suffix):
+        BASE = 'https://stackoverflow.com/review'
+        return BASE + suffix
+
     def get_stats_url(self):
-        return f'https://stackoverflow.com/review/{self.slug}/stats'
+        return self._get_url(f'/{self.slug}/stats')
 
     def get_review_url(self):
-        return f'https://stackoverflow.com/review/{self.slug}'
+        return self._get_url(f'/{self.slug}')
 
 
 def get_queues():
